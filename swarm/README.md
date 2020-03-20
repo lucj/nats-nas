@@ -20,7 +20,35 @@ The following actions are performed:
 - copy the SYSU creds files locally in the *secrets* folder
 
 ```
-./deploy-NAS-NATS.sh
+$ ./deploy-NAS-NATS.sh
+
+nats_accounts
+nats_nkeys
+             _             _
+ _ __   __ _| |_ ___      | |__   _____  __
+| '_ \ / _` | __/ __|_____| '_ \ / _ \ \/ /
+| | | | (_| | |_\__ \_____| |_) | (_) >  <
+|_| |_|\__,_|\__|___/     |_.__/ \___/_/\_\
+
+nats-box v0.3.0
+[ OK ] generated and stored operator key "OALYT5ISXHJWQ2QN7LSIKX4ILYH5AKK7TNZA5PLURFVIRXNIFKWXVFAU"
+[ OK ] added operator "OP"
+[ OK ] set account jwt server url to "http://172.17.0.1:9090/jwt/v1"
+[ OK ] edited operator "OP"
+[ OK ] generated and stored account key "AA6MMF5MYQDAWET43DUUWXPH7YEJAG3LQZP4MMEYSJOTKDXGDV5WJJZE"
+[ OK ] added account "SYS"
+[ OK ] generated and stored user key "UCG2IOGBNLFR7JAGEYILDCWKFY6P475JXXH3DF3GPD3IAR2V7Y3WIFTQ"
+[ OK ] generated user creds file "/nsc/nkeys/creds/OP/SYS/SYSU.creds"
+[ OK ] added user "SYSU" to account "SYS"
+Creating network app_default
+Creating secret app_nats-sys-creds
+Creating config app_nats-nas
+Creating config app_nats-op-jwt
+Creating config app_nats-sys-account-jwt
+Creating service app_nats-accounts
+Creating config app_nats-server-conf
+Creating service app_nats
+box
 ```
 
 ## Create APP / APPU (admin user)
@@ -31,7 +59,23 @@ The following actions are performed:
 - copy the APPU creds files locally in the *secrets* folder
 
 ```
-./create-admin.sh
+$ ./create-admin.sh
+
+             _             _
+ _ __   __ _| |_ ___      | |__   _____  __
+| '_ \ / _` | __/ __|_____| '_ \ / _ \ \/ /
+| | | | (_| | |_\__ \_____| |_) | (_) >  <
+|_| |_|\__,_|\__|___/     |_.__/ \___/_/\_\
+
+nats-box v0.3.0
+[ OK ] generated and stored account key "AAHYVVW5DKRYBAZLQ62SZG4TAEXFFTMDAKTOBESIOC2S3ZRP6T5C3AM4"
+[ OK ] added account "APP"
+[ OK ] generated and stored user key "UAROCSCGRXAL6LDFGEVM5Y5NZPT6QSPVXPAIHPI4V7JKAOKGQVGVWX3C"
+[ OK ] generated user creds file "/nsc/nkeys/creds/OP/APP/APPU.creds"
+[ OK ] added user "APPU" to account "APP"
+[ OK ] pushed "APP" to account server
+Copying APPU credentials in [/APPU.creds]
+box
 ```
 
 Make sure the pub/sub is working fine with this user:
@@ -52,8 +96,89 @@ The following actions are performed:
 - create a client account (user1) and its associated user (user1)
 - create an import in account user1 on subject "users.user1.>"
 - copy the user1 creds files locally in the *secrets* folder
+
 ```
-./create-client.sh user1 "users.user1.>"
+$ ./create-client.sh user1 "users.user1.>"
+
+             _             _
+ _ __   __ _| |_ ___      | |__   _____  __
+| '_ \ / _` | __/ __|_____| '_ \ / _ \ \/ /
+| | | | (_| | |_\__ \_____| |_) | (_) >  <
+|_| |_|\__,_|\__|___/     |_.__/ \___/_/\_\
+
+nats-box v0.3.0
+[ OK ] added private stream export "user1_export"
+[ OK ] generated and stored account key "ABWXYURAUTEAPTCRQSGNKTTWXZOXNDT2ULIPPT2JLDO4EHJREQSBSQFZ"
+[ OK ] added account "user1"
+[ OK ] generated and stored user key "UDNXOPRKFPXX6KIVMJKGQQOC5Q4C2B6IYIBEJDO7RWNMZCSRDA4C7KLC"
+[ OK ] generated user creds file "/nsc/nkeys/creds/OP/user1/user1.creds"
+[ OK ] added user "user1" to account "user1"
+[ OK ] generated "user1_export" activation for account "ABWXYURAUTEAPTCRQSGNKTTWXZOXNDT2ULIPPT2JLDO4EHJREQSBSQFZ"
+[ OK ] wrote account description to "/tmp/user1-activation.jwt"
+all jobs succeeded
+[ OK ] added stream import "users.user1.>"
+╭──────────────────────────────────────────────────────────────────────────────────────╮
+│                                   Account Details                                    │
+├───────────────────────────┬──────────────────────────────────────────────────────────┤
+│ Name                      │ user1                                                    │
+│ Account ID                │ ABWXYURAUTEAPTCRQSGNKTTWXZOXNDT2ULIPPT2JLDO4EHJREQSBSQFZ │
+│ Issuer ID                 │ OALYT5ISXHJWQ2QN7LSIKX4ILYH5AKK7TNZA5PLURFVIRXNIFKWXVFAU │
+│ Issued                    │ 2020-03-20 15:12:36 UTC                                  │
+│ Expires                   │                                                          │
+├───────────────────────────┼──────────────────────────────────────────────────────────┤
+│ Max Connections           │ Unlimited                                                │
+│ Max Leaf Node Connections │ Unlimited                                                │
+│ Max Data                  │ Unlimited                                                │
+│ Max Exports               │ Unlimited                                                │
+│ Max Imports               │ Unlimited                                                │
+│ Max Msg Payload           │ Unlimited                                                │
+│ Max Subscriptions         │ Unlimited                                                │
+│ Exports Allows Wildcards  │ True                                                     │
+├───────────────────────────┼──────────────────────────────────────────────────────────┤
+│ Exports                   │ None                                                     │
+╰───────────────────────────┴──────────────────────────────────────────────────────────╯
+
+╭────────────────────────────────────────────────────────────────────────────────────────╮
+│                                        Imports                                         │
+├──────────────┬────────┬───────────────┬──────────────┬─────────┬──────────────┬────────┤
+│ Name         │ Type   │ Remote        │ Local/Prefix │ Expires │ From Account │ Public │
+├──────────────┼────────┼───────────────┼──────────────┼─────────┼──────────────┼────────┤
+│ user1_export │ Stream │ users.user1.> │              │         │ APP          │ No     │
+╰──────────────┴────────┴───────────────┴──────────────┴─────────┴──────────────┴────────╯
+╭──────────────────────────────────────────────────────────────────────────────────────╮
+│                                   Account Details                                    │
+├───────────────────────────┬──────────────────────────────────────────────────────────┤
+│ Name                      │ APP                                                      │
+│ Account ID                │ AAHYVVW5DKRYBAZLQ62SZG4TAEXFFTMDAKTOBESIOC2S3ZRP6T5C3AM4 │
+│ Issuer ID                 │ OALYT5ISXHJWQ2QN7LSIKX4ILYH5AKK7TNZA5PLURFVIRXNIFKWXVFAU │
+│ Issued                    │ 2020-03-20 15:12:36 UTC                                  │
+│ Expires                   │                                                          │
+├───────────────────────────┼──────────────────────────────────────────────────────────┤
+│ Max Connections           │ Unlimited                                                │
+│ Max Leaf Node Connections │ Unlimited                                                │
+│ Max Data                  │ Unlimited                                                │
+│ Max Exports               │ Unlimited                                                │
+│ Max Imports               │ Unlimited                                                │
+│ Max Msg Payload           │ Unlimited                                                │
+│ Max Subscriptions         │ Unlimited                                                │
+│ Exports Allows Wildcards  │ True                                                     │
+├───────────────────────────┼──────────────────────────────────────────────────────────┤
+│ Imports                   │ None                                                     │
+╰───────────────────────────┴──────────────────────────────────────────────────────────╯
+
+╭─────────────────────────────────────────────────────────────────────────╮
+│                                 Exports                                 │
+├──────────────┬────────┬───────────────┬────────┬─────────────┬──────────┤
+│ Name         │ Type   │ Subject       │ Public │ Revocations │ Tracking │
+├──────────────┼────────┼───────────────┼────────┼─────────────┼──────────┤
+│ user1_export │ Stream │ users.user1.> │ No     │ 0           │ N/A      │
+╰──────────────┴────────┴───────────────┴────────┴─────────────┴──────────╯
+[ OK ] pushed "APP" to account server
+[ OK ] pushed "SYS" to account server
+[ OK ] pushed "user1" to account server
+all jobs succeeded
+Copying user user1 credentials into [./secrets/user1.creds]
+box
 ```
 
 Make sure it's working fine:
