@@ -1,0 +1,35 @@
+version: '3.6'
+
+services:
+  nats-accounts:
+    image: synadia/nats-account-server:0.8.4
+    command:
+      - "-c"
+      - "/nas.conf"
+    configs:
+    - source: nats-op-jwt
+      target: /nsc/accounts/nats/OP/OP.jwt
+    - source: nats-sys-account-jwt
+      target: /nsc/accounts/nats/OP/accounts/SYS/SYS.jwt
+    - source: nats-nas
+      target: /nas.conf
+    secrets:
+    - source: nats-sys-creds
+      target: /nsc/nkeys/creds/OP/SYS/SYSU.creds
+    ports:
+      - 9090:9090
+
+configs:
+  nats-op-jwt:
+    file: ../jwt/OP.jwt
+  nats-sys-account-jwt:
+    file: ../jwt/SYS.jwt
+  nats-nas:
+    file: ../conf/nas.conf
+
+secrets:
+  nats-sys-creds:
+    file: ../secrets/SYSU.creds
+
+networks:
+  app:

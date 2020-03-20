@@ -1,0 +1,25 @@
+version: '3.6'
+
+services:
+  nats:
+    image: nats:2.1.4
+    command:
+      - "-DV"
+      - "-c"
+      - "/server.conf"
+    configs:
+      - source: nats-op-jwt
+        target: /nsc/accounts/nats/OP/OP.jwt
+      - source: nats-server-conf
+        target: /server.conf
+    ports:
+      - "4222:4222"
+
+configs:
+  nats-op-jwt:
+    file: ../jwt/OP.jwt
+  nats-server-conf:
+    file: ../conf/nats.conf
+
+networks:
+  app:
