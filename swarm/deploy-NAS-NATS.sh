@@ -26,11 +26,15 @@ docker cp box:/nsc/accounts/nats/OP/accounts/SYS/SYS.jwt ${JWT_DIR}/SYS.jwt
 # Get system user creds file
 docker cp box:/nsc/nkeys/creds/OP/SYS/SYSU.creds ${SECRETS_DIR}/SYSU.creds
 
+# Cleanup
+docker container rm box
+
 # Running NATS Account Server
 docker stack deploy -c ${MANIFESTS_DIR}/nas.yml app
 
+# Generate nats.conf from template
+SYSTEM_ACCOUNT_PUBLIC_KEY=$(docker container run --rm -v nats_accounts:/nsc/accounts -v $PWD/bin:/nas -ti --entrypoint /bin/sh synadia/nats-box /nas/get-sys-id.sh)
+sed "s/SYSTEM_ACCOUNT_PUBLIC_KEY/$SYSTEM_ACCOUNT_PUBLIC_KEY/g" ${CONF_DIR}/nats.conf.tpl > ${CONF_DIR}/nats.conf
+
 # Running NATS Server
 docker stack deploy -c ${MANIFESTS_DIR}/nats.yml app
-
-# Cleanup
-docker container rm box

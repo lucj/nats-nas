@@ -193,5 +193,3 @@ Listening on [users.user1.>]
 nats-pub -creds ./secrets/APPU.creds "users.user1.events" hello
 Published [users.user1.events] : 'hello'
 ```
-
-Currently facing an issue as the user1 does not receive any messages (unless NATS is restarted)
